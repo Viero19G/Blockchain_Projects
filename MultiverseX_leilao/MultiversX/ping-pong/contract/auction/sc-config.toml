@@ -1,0 +1,9 @@
+[settings]
+main = "src/auction.rs"
+output-dir = "output"
+
+[contracts.auction]
+name = "auction"
+add-unlabelled = true
+add-endpoints = true
+external-view = false

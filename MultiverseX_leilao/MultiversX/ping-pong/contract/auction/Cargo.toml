@@ -1,0 +1,15 @@
+[package]
+name = "auction"
+version = "0.0.0"
+authors = ["MultiversX"]
+edition = "2021"
+publish = false
+
+[lib]
+path = "src/auction.rs"
+
+[dependencies.multiversx-sc]
+version = "0.56.1"
+
+[dev-dependencies.multiversx-sc-scenario]
+version = "0.56.1"
