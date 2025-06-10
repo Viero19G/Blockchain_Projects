@@ -169,6 +169,8 @@ Edite o arquivo:
 ```ts
 src/config/config.devnet.ts
 ```
+![image](https://github.com/user-attachments/assets/203415d0-28cd-44a3-876b-72c976d95d9d)
+
 
 Substitua o valor:
 
@@ -177,6 +179,14 @@ contractAddress: "erd1qqqqqqqqqqqqqpgqymj43x6anzr38jfz7kw3td2ew33v9jtrd8sse5zzk6
 ```
 
 ---
+
+
+Use o comando:  yarn start:devnet no raiz do dapp
+```ts
+ yarn start:devnet
+```
+
+![image](https://github.com/user-attachments/assets/63d31bb9-49e6-44c2-ab88-d221ef2a71bd)
 
 ## 🏁 Conclusão
 
