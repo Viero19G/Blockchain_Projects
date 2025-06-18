@@ -1,0 +1,17 @@
+[package]
+name = "auction-wasm"
+version = "0.0.0"
+edition = "2021"
+publish = false
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies.auction]
+path = ".."
+
+[dependencies.multiversx-sc-wasm-adapter]
+version = "0.56.1"
+
+[dependencies.multiversx-sc-meta-lib]
+version = "0.56.1"

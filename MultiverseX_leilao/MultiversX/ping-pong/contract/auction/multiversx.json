@@ -1,0 +1,7 @@
+{
+    "language": "rust",
+    "settings": {
+        "main": "src/auction.rs",
+        "outputDir": "output"
+    }
+}
