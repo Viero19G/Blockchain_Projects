@@ -82,30 +82,26 @@ fn test_size_of_composite_types_using_padding() {
 
 #[test]
 fn broken_test_integer_overflow() {
-    // let num: u8 = 255;
-    // Corrija o seguinte código para evitar o overflow e faça o teste passar.
-    // let result = num + 1;
-    // assert_eq!(result, 0);
+    let num: u8 = 255;
+    let result = num.wrapping_add(1); // Usa wrapping_add para evitar pânico e obter 0
+    assert_eq!(result, 0);
 }
 
 #[test]
-#[ignore]
 fn broken_test_type_mismatch() {
     let boolean: bool = true;
     // Corrija o tipo esperado no assert para que o teste passe.
-    assert_eq!(boolean, false);
+    assert_eq!(boolean, true);
 }
 
 #[test]
 fn broken_test_tuple_access() {
     let my_tuple: (i32, f64, char) = (500, 6.4, '🚀');
-    // Corrija o acesso ao elemento da tupla para que o teste passe.
-    assert_eq!(1.1, 6.4);
+    assert_eq!(my_tuple.1, 6.4); // Corrigido: acessa o elemento no índice 1
 }
-
 #[test]
 fn broken_test_array_size() {
     let array: [i32; 5] = [1, 2, 3, 4, 5];
     // Corrija o tamanho esperado do array para que o teste passe.
-    assert_eq!(std::mem::size_of_val(&array), 0);
+    assert_eq!(std::mem::size_of_val(&array), 20);
 }

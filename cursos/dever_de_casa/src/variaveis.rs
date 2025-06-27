@@ -44,5 +44,5 @@ fn test_aprendendo_sobre_tests() {
     // Este teste intencionalmente falhará, mostrando como o teste pode ser usado para pegar erros.
     let minha_var = 12;
     // Corrija o valor esperado para que o teste passe.
-    assert_eq!(minha_var, 11); // O valor esperado deve ser igual ao valor da variável.
+    assert_eq!(minha_var, 12); // O valor esperado deve ser igual ao valor da variável.
 }
