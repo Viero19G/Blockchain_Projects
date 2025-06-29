@@ -1,3 +1,5 @@
-/target
+*/target
 /meta
 /scenarios
+../rust_101/target/
+../dever_de_casa/target
