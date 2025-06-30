@@ -71,6 +71,7 @@ pub trait ZombiesContract {
     //    - Isso prepara o `zombie_last_index` para o próximo zumbi que será criado,
     //      garantindo que ele receba um ID subsequente. A modificação é feita dentro
     //      da closure `update`, assegurando que o novo valor seja persistido.
+    #[view]
     fn create_zombie(&self, name: ManagedBuffer, dna: u64) {
         self.zombie_last_index().update(|id| //capturando o id disponível na lista de zombies
             {
