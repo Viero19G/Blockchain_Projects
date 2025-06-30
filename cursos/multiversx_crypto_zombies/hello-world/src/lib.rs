@@ -36,6 +36,52 @@ pub trait ZombiesContract {
     #[upgrade]
     fn upgrade(&self) {}
 
+    // ---------------------------------------//
+    // Funções Aqui
+
+    // O que faz: Esta função
+    // é responsável por criar um novo objeto Zombie e armazená-lo na blockchain.
+    //
+    // POR QUE É ESCRITA DESTA FORMA:
+    // 1. Assinatura da Função:
+    //    - `&self`: Permite que a função interaja com o armazenamento do contrato.
+    //    - `name: ManagedBuffer`: Recebe o nome do novo zumbi. 
+    //      `ManagedBuffer` é o tipo usado para strings/arrays de bytes no ambiente MultiversX SC.
+    //    - `dna: u64`: Recebe o valor de DNA do novo zumbi, um inteiro de 64 bits.
+    //
+    // 2. `self.zombie_last_index().update(|id| { ... });`
+    //    - `self.zombie_last_index()`: Acede o mapeador de armazenamento 
+    //       que guarda o último ID de zumbi utilizado (ou o próximo disponível).
+    //    - `.update(|id| { ... })`: Este é um método padrão para modificar valores no armazenamento persistente.
+    //      Ele garante que a leitura do valor atual (`*id`) e a escrita do novo valor (`*id += 1`)
+    //      ocorram de forma atômica e segura, prevenindo inconsistências em um ambiente de concorrência.
+    //      A closure `|id|` recebe uma referência mutável ao valor armazenado (`&mut usize`), permitindo que ele seja modificado.
+    //
+    // 3. `self.zombies(id).set(Zombie { name, dna });`
+    //    - `self.zombies(id)`: Acede o mapeador de armazenamento específico para o ID atual do zumbi.
+    //      Sua declaração `fn zombies(&self, id: usize) -> SingleValueMapper<Zombie<Self::Api>>;`
+    //      significa que cada ID de zumbi terá seu próprio "slot" de armazenamento de valor único.
+    //    - `.set(Zombie { name, dna })`: Define o valor nesse slot de armazenamento como uma nova instância da struct `Zombie`.
+    //      A sintaxe `{ name, dna }` é um atalho de Rust quando os nomes dos campos da struct
+    //      são os mesmos dos nomes das variáveis que você está usando para preenchê-los.
+    //      Isso salva o novo zumbi na blockchain, associado ao seu ID único.
+    //
+    // 4. `*id += 1;`
+    //    - Incrementa o valor do `id` (o contador `zombie_last_index`) em 1.
+    //    - Isso prepara o `zombie_last_index` para o próximo zumbi que será criado,
+    //      garantindo que ele receba um ID subsequente. A modificação é feita dentro
+    //      da closure `update`, assegurando que o novo valor seja persistido.
+    fn create_zombie(&self, name: ManagedBuffer, dna: u64) {
+        self.zombie_last_index().update(|id| //capturando o id disponível na lista de zombies
+            {
+            self.zombies(id).set(Zombie { name, dna }); // Atualizando lista com novo Zombie no ID 
+        *id +=1; // Atualizando id para próxima criação pegar o ID correto
+        });
+    }
+
+    //----------------------------------------//
+
+
     // Mapeando variável para ser salva onchain com SingleValueMapper
     // deve ser utilizado chamando SingleValueMapper<aqui_o_tipo_da_variável_rust >
     #[storage_mapper("dnaDigits")]
