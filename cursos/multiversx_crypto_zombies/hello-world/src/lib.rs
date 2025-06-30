@@ -78,6 +78,10 @@ pub trait ZombiesContract {
         *id +=1; // Atualizando id para próxima criação pegar o ID correto
         });
     }
+    // iniciando desenvolvimento de uma função que irá retornar um DNA aleatório
+    // ela deve retornar um dado u64
+    fn generate_random_dna(&self) -> u64 {
+    }
 
     //----------------------------------------//
 
@@ -98,6 +102,12 @@ pub trait ZombiesContract {
     // Diferente de um 'MapMapper' (que armazena múltiplos itens sob uma única chave raiz),
     // um 'SingleValueMapper' aqui, com um parâmetro 'id', indica que cada Zumbi será
     // armazenado como um valor único, acessível por uma chave composta que inclui "zombies" e o 'id' fornecido.
+
+    // marcando como view, transformando o storage em um endpoint,
+    // funções com essa marcação tem sua chamada gratuita, ou seja, não é cobrado GAS
+    // porque não modificam o estado da blockchain
+    // Isso permitirá ao nosso dApp consultar informações em tempo real sem custos adicionais.
+    #[view]
     #[storage_mapper("zombies")]
     fn zombies(&self, id: usize) -> SingleValueMapper<Zombie<Self::Api>>;
 }
