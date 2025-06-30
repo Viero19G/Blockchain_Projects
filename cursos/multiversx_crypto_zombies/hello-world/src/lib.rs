@@ -85,6 +85,12 @@ pub trait ZombiesContract {
     fn generate_random_dna(&self) -> u64 {
     }
 
+    // o marcador endpoint faz baasicamente a mesma coisa que o view, porém esse tem custo
+    // porque o endpoint altera o estado da blockchain
+    #[endpoint]
+    fn create_random_zombie(&self, name: ManagedBuffer){
+        
+    }
     //----------------------------------------//
 
 
