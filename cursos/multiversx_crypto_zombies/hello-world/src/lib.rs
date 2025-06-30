@@ -93,7 +93,8 @@ pub trait ZombiesContract {
     // porque o endpoint altera o estado da blockchain
     #[endpoint]
     fn create_random_zombie(&self, name: ManagedBuffer){
-        
+        let rand_dna = self.generate_random_dna(); // self sempre que for acionar funções do contrato.
+        create_zombie(name, rand_dna) // criando e retornando um novo Zombie com o nome recebido e com um valor dna aleatório
     }
     //----------------------------------------//
 
