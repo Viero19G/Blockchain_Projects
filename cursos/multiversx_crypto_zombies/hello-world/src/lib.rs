@@ -75,6 +75,7 @@ pub trait ZombiesContract {
     fn create_zombie(&self, name: ManagedBuffer, dna: u64) {
         self.zombie_last_index().update(|id| //capturando o id disponível na lista de zombies
             {
+            self.new_zombie_event(*id, &name, dna);
             self.zombies(id).set(Zombie { name, dna }); // Atualizando lista com novo Zombie no ID 
         *id +=1; // Atualizando id para próxima criação pegar o ID correto
         });
@@ -94,10 +95,24 @@ pub trait ZombiesContract {
     #[endpoint]
     fn create_random_zombie(&self, name: ManagedBuffer){
         let rand_dna = self.generate_random_dna(); // self sempre que for acionar funções do contrato.
-        self.create_zombie(name, rand_dna) // criando e retornando um novo Zombie com o nome recebido e com um valor dna aleatório
+        self.create_zombie(name, rand_dna); // criando e retornando um novo Zombie com o nome recebido e com um valor dna aleatório
     }
     //----------------------------------------//
+    
+    
+    // Eventos--------------------------------//
+    // O que faz: Este atributo declara uma função como um "evento" que pode ser emitido pelo contrato.
+    // Quando 'new_zombie_event' é chamada no código (como em `create_zombie`), ela não retorna um valor,
+    // mas sim cria um registro (log) na blockchain.
+    #[event("newZombieEvent")]
+    fn new_zombie_event(
+        &self,
+        #[indexed] zombie_id: usize, // Parâmetro 'zombie_id' do evento. #[indexed] o torna pesquisável.
+        name: &ManagedBuffer, // Parâmetro 'name' do evento, recebido por referência para eficiência.
+        #[indexed] dna: u64 // Parâmetro 'dna' do evento, também indexado para pesquisa.
+    );
 
+    //----------------------------------------//
 
     // Mapeando variável para ser salva onchain com SingleValueMapper
     // deve ser utilizado chamando SingleValueMapper<aqui_o_tipo_da_variável_rust >
