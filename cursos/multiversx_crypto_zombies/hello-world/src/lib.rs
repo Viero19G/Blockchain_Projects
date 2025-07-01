@@ -138,4 +138,14 @@ pub trait ZombiesContract {
     #[view]
     #[storage_mapper("zombies")]
     fn zombies(&self, id: usize) -> SingleValueMapper<Zombie<Self::Api>>;
+    
+    // mappers abaixo para lidar com acount address
+    // POR QUE EXISTEM: Enquanto 'zombie_owner' responde "Quem é o dono do Zumbi X?",
+    // 'owned_zombies' responde "Quais zumbis o Endereço Y possui?".
+    #[storage_mapper("zombieOwner")]
+    fn zombie_owner(&self, id: &usize) -> SingleValueMapper<ManagedAddress>;
+
+    #[storage_mapper("ownedZombies")]
+    fn owned_zombies(&self, owner: &ManagedAddress) -> UnorderedSetMapper<usize>;
 }
+
