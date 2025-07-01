@@ -109,7 +109,7 @@ pub trait ZombiesContract {
         &self,
         #[indexed] zombie_id: usize, // Parâmetro 'zombie_id' do evento. #[indexed] o torna pesquisável.
         name: &ManagedBuffer, // Parâmetro 'name' do evento, recebido por referência para eficiência.
-        #[indexed] dna: u64 // Parâmetro 'dna' do evento, também indexado para pesquisa.
+        #[indexed] dna: u64, // Parâmetro 'dna' do evento, também indexado para pesquisa.
     );
 
     //----------------------------------------//
