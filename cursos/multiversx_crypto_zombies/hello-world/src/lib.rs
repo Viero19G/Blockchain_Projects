@@ -72,11 +72,13 @@ pub trait ZombiesContract {
     //      garantindo que ele receba um ID subsequente. A modificação é feita dentro
     //      da closure `update`, assegurando que o novo valor seja persistido.
     
-    fn create_zombie(&self, name: ManagedBuffer, dna: u64) {
+    fn create_zombie(&self, owner: ManagedAddress, name: ManagedBuffer, dna: u64)  { // Atualizamos a função para receber o caller como owner
         self.zombie_last_index().update(|id| //capturando o id disponível na lista de zombies
             {
             self.new_zombie_event(*id, &name, dna);
             self.zombies(id).set(Zombie { name, dna }); // Atualizando lista com novo Zombie no ID 
+            self.owned_zombies(&owner).insert(*id); // Adicionando referencia quais zumbis pertecem ao endereço Y ?.
+            self.zombie_owner(id).set(owner);// adicionando referencia esse zumbi pertece ao endereço?
         *id +=1; // Atualizando id para próxima criação pegar o ID correto
         });
     }
@@ -94,8 +96,10 @@ pub trait ZombiesContract {
     // porque o endpoint altera o estado da blockchain
     #[endpoint]
     fn create_random_zombie(&self, name: ManagedBuffer){
+        let caller = self.blockchain().get_caller(); // caller refere-se ao endereço da conta/smartcontract que está acionando a função
         let rand_dna = self.generate_random_dna(); // self sempre que for acionar funções do contrato.
-        self.create_zombie(name, rand_dna); // criando e retornando um novo Zombie com o nome recebido e com um valor dna aleatório
+        self.create_zombie(caller, name, rand_dna); // criando e retornando um novo Zombie com o nome recebido e com um valor dna aleatório
+        //Então agora também estamos passando o endereço caller para a função que irá criar o zombie
     }
     //----------------------------------------//
     
