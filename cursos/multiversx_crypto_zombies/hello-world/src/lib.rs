@@ -25,7 +25,7 @@ use multiversx_sc::imports::*;
 
 /// An empty contract. To be used as a template when starting a new contract from scratch.
 #[multiversx_sc::contract]
-pub trait ZombiesContract {
+pub trait ZombiesContract: ZombieFeeding{
     #[init]
     fn init(&self) {
     self.dna_digits().set(16u8);
@@ -157,3 +157,6 @@ pub trait ZombiesContract {
     fn owned_zombies(&self, owner: &ManagedAddress) -> UnorderedSetMapper<usize>;
 }
 
+#[multiversx_sc::module]
+pub trait ZombieFeeding {
+}
