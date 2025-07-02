@@ -1,0 +1,1 @@
+/home/iratus/Documentos/blockchain_projects/cursos/rust_101/buff_value/target/package/buff_value-0.1.0/target/debug/libbuff_value.rlib: /home/iratus/Documentos/blockchain_projects/cursos/rust_101/buff_value/target/package/buff_value-0.1.0/src/lib.rs

@@ -1,0 +1,8 @@
+[package]
+name = "buff_value"
+version = "0.1.0"
+edition = "2024"
+description = "Simple library to calculate the value of a given investment"
+authors = ["Viero19G <gabrielviero22@gmail.com>"]
+repository = https://github.com/Viero19G/buff_value.git git@github.com:Viero19G/buff_value.git
+[dependencies]
