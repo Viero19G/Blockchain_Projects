@@ -97,6 +97,10 @@ pub trait ZombiesContract {
     #[endpoint]
     fn create_random_zombie(&self, name: ManagedBuffer){
         let caller = self.blockchain().get_caller(); // caller refere-se ao endereço da conta/smartcontract que está acionando a função
+        require!( // require é usado para específicar uma ou mais condições todas precisam ser true para continuar
+            self.owned_zombies(&caller).is_empty(), // condição
+            "You already own a zombie" // mensagem de erro
+        );
         let rand_dna = self.generate_random_dna(); // self sempre que for acionar funções do contrato.
         self.create_zombie(caller, name, rand_dna); // criando e retornando um novo Zombie com o nome recebido e com um valor dna aleatório
         //Então agora também estamos passando o endereço caller para a função que irá criar o zombie
